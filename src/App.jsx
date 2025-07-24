@@ -167,7 +167,7 @@ function App() {
             <div className="w-full flex flex-col gap-4 mb-8 items-center">
               <button onClick={() => handleAttendance('Sabah')} disabled={!!todayAttendance['Sabah']} className={`w-full ${todayAttendance['Sabah'] ? 'opacity-50 cursor-not-allowed' : ''}`}>Sabah Yoklaması (10:00-10:30)</button>
               <button onClick={() => handleAttendance('Öğlen')} disabled={!!todayAttendance['Öğlen']} className={`w-full ${todayAttendance['Öğlen'] ? 'opacity-50 cursor-not-allowed' : ''}`}>Öğlen Yoklaması (12:30-13:00)</button>
-              <button onClick={() => handleAttendance('Akşam')} disabled={!!todayAttendance['Akşam']} className={`w-full ${todayAttendance['Akşam'] ? 'opacity-50 cursor-not-allowed' : ''}`}>Akşam Yoklaması (17:30-18:00)</button>
+              <button onClick={() => handleAttendance('Akşam')} disabled={!!todayAttendance['Akşam']} className={`w-full ${todayAttendance['Akşam'] ? 'opacity-50 cursor-not-allowed' : ''}`}>Akşam Yoklaması (17:30-23:00)</button>
             </div>
           </>
         )}
