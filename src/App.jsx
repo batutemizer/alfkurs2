@@ -88,6 +88,13 @@ function App() {
       setInfo('Lütfen ad ve soyad giriniz!');
       return;
     }
+    // Aynı ad ve soyad ile kayıt var mı kontrol et
+    const q = query(studentsCol, where('ad', '==', ad), where('soyad', '==', soyad));
+    const snap = await getDocs(q);
+    if (!snap.empty) {
+      setInfo('Bu ad ve soyad ile zaten bir kayıt var!');
+      return;
+    }
     try {
       const docRef = await addDoc(studentsCol, { ad, soyad, deviceId });
       setStudent({ id: docRef.id, ad, soyad, deviceId });
