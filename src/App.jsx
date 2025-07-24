@@ -50,9 +50,9 @@ function App() {
   }, [student]);
 
   const timeRanges = {
-    'Sabah': [10, 0, 10, 30],
+    'Sabah': [17, 0, 17, 30],
     'Öğlen': [15, 0, 15, 30],
-    'Akşam': [17, 30, 18, 0],
+    'Akşam': [17, 0, 18, 0],
   };
 
   function isInTimeRange(kategori) {
@@ -142,6 +142,12 @@ function App() {
         <p className="mt-8 text-xs text-muted text-center">
           © {new Date().getFullYear()} Alf Kurs Merkezi. Tüm hakları saklıdır.
         </p>
+      </div>
+      <div className="flex flex-col items-center mt-8 mb-2 opacity-80">
+        <a href="https://softnix.com.tr" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-xs text-[var(--primary)] font-semibold hover:underline">
+          
+          Tüm Haklar Softnix'e Aittir.
+        </a>
       </div>
     </div>
   )
