@@ -7,8 +7,8 @@ import { useState, useEffect } from 'react'
 import { UserIcon } from '@heroicons/react/24/solid'
 
 // Konum kontrolü için sabitler ve yardımcı fonksiyon
-const DERSHANE_LAT = 38.66158069708637;
-const DERSHANE_LNG = 39.175602082141594;
+const DERSHANE_LAT = 38.657468813794154;
+const DERSHANE_LNG = 39.168011766084234;
 const MAX_DISTANCE_METERS = 50;
 
 function getDistanceFromLatLonInMeters(lat1, lon1, lat2, lon2) {
