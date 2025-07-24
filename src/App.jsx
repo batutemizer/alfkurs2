@@ -165,15 +165,17 @@ function App() {
           Dershanenin WiFi ağına bağlı olduğunuzdan emin olun ve ilgili yoklama saatinde yoklama alın.
         </p>
         {!student ? (
-          <form onSubmit={handleRegister} className="flex flex-col gap-4 w-full max-w-xs mb-6">
-            <div className="text-center text-base font-semibold mb-2 text-[var(--primary)]">
-              Cihazınız kayıtlı değil. Lütfen kayıt olun:<br/>
-              <span className="text-xs text-[var(--accent)]">Adınızı ve soyadınızı bitişik, özel karakter ve boşluk olmadan giriniz. (Örn: AhmetYılmaz)</span>
-            </div>
-            <input type="text" placeholder="Ad" value={ad} onChange={e => setAd(e.target.value)} required />
-            <input type="text" placeholder="Soyad" value={soyad} onChange={e => setSoyad(e.target.value)} required />
-            <button type="submit" className="w-full mt-2">Kaydol</button>
-          </form>
+          <div className="relative w-full flex flex-col items-center justify-center">
+            <img src="/alflogo-Photoroom (1).png" alt="Alf Kurs Merkezi Logo" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-10 w-64 h-64 object-contain pointer-events-none select-none z-0" />
+            <form onSubmit={handleRegister} className="flex flex-col gap-4 w-full max-w-xs mb-6 relative z-10">
+              <div className="text-center text-base font-semibold mb-2 text-[var(--primary)]">Cihazınız kayıtlı değil. Lütfen kayıt olun:<br/>
+                <span className="text-xs text-[var(--accent)]">Adınızı ve soyadınızı bitişik, özel karakter ve boşluk olmadan giriniz. (Örn: AhmetYılmaz)</span>
+              </div>
+              <input type="text" placeholder="Ad" value={ad} onChange={e => setAd(e.target.value)} required />
+              <input type="text" placeholder="Soyad" value={soyad} onChange={e => setSoyad(e.target.value)} required />
+              <button type="submit" className="w-full mt-2">Kaydol</button>
+            </form>
+          </div>
         ) : (
           <>
             <div className="mb-6 text-center text-base font-semibold text-[var(--primary)] flex items-center justify-center gap-2">
