@@ -6,6 +6,24 @@ import { addDoc, getDocs, query, where, Timestamp } from 'firebase/firestore'
 import { useState, useEffect } from 'react'
 import { UserIcon } from '@heroicons/react/24/solid'
 
+// Konum kontrolü için sabitler ve yardımcı fonksiyon
+const DERSHANE_LAT = 38.661574491880494;
+const DERSHANE_LNG = 39.175094215332166;
+const MAX_DISTANCE_METERS = 100;
+
+function getDistanceFromLatLonInMeters(lat1, lon1, lat2, lon2) {
+  const R = 6371e3;
+  const φ1 = lat1 * Math.PI/180;
+  const φ2 = lat2 * Math.PI/180;
+  const Δφ = (lat2-lat1) * Math.PI/180;
+  const Δλ = (lon2-lon1) * Math.PI/180;
+  const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
+            Math.cos(φ1) * Math.cos(φ2) *
+            Math.sin(Δλ/2) * Math.sin(Δλ/2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  return R * c;
+}
+
 function App() {
   const deviceId = getOrCreateDeviceId();
   const navigate = useNavigate();
@@ -93,18 +111,34 @@ function App() {
       setInfo(`${kategori} yoklaması sadece belirtilen saat aralığında alınabilir!`);
       return;
     }
-    try {
-      await addDoc(attendanceCol, {
-        studentId: student.id,
-        deviceId,
-        kategori,
-        timestamp: Timestamp.now(),
-      });
-      setTodayAttendance(prev => ({ ...prev, [kategori]: true }));
-      setInfo(`${kategori} yoklaması başarıyla alındı!`);
-    } catch (e) {
-      setInfo('Yoklama alınırken hata oluştu!');
+    // Konum kontrolü
+    if (!navigator.geolocation) {
+      setInfo('Tarayıcınız konum servisini desteklemiyor!');
+      return;
     }
+    setInfo('Konum kontrol ediliyor...');
+    navigator.geolocation.getCurrentPosition(async (position) => {
+      const { latitude, longitude } = position.coords;
+      const distance = getDistanceFromLatLonInMeters(latitude, longitude, DERSHANE_LAT, DERSHANE_LNG);
+      if (distance > MAX_DISTANCE_METERS) {
+        setInfo('Konumunuz dershane dışında görünüyor. Yoklama alınamaz.');
+        return;
+      }
+      try {
+        await addDoc(attendanceCol, {
+          studentId: student.id,
+          deviceId,
+          kategori,
+          timestamp: Timestamp.now(),
+        });
+        setTodayAttendance(prev => ({ ...prev, [kategori]: true }));
+        setInfo(`${kategori} yoklaması başarıyla alındı!`);
+      } catch (e) {
+        setInfo('Yoklama alınırken hata oluştu!');
+      }
+    }, (error) => {
+      setInfo('Konum alınamadı: ' + error.message);
+    });
   };
 
   if (loading) {
