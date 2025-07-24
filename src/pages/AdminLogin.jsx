@@ -21,13 +21,16 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-600 via-fuchsia-500 to-orange-400">
-      <form onSubmit={handleSubmit} className="bg-white bg-opacity-90 p-8 rounded-2xl shadow-xl flex flex-col gap-4 w-80">
-        <h2 className="text-2xl font-bold text-center mb-2">Yönetici Girişi</h2>
-        <input type="email" placeholder="E-posta" value={email} onChange={e => setEmail(e.target.value)} className="p-3 rounded-lg border" required />
-        <input type="password" placeholder="Şifre" value={password} onChange={e => setPassword(e.target.value)} className="p-3 rounded-lg border" required />
+    <div className="min-h-screen flex items-center justify-center bg-[var(--bg)] px-2 py-8">
+      <form onSubmit={handleSubmit} className="card w-full max-w-xs flex flex-col gap-4 items-center">
+        <h1 className="text-2xl font-bold text-center mb-2">Yönetici Girişi</h1>
+        <input type="email" placeholder="E-posta" value={email} onChange={e => setEmail(e.target.value)} required />
+        <input type="password" placeholder="Şifre" value={password} onChange={e => setPassword(e.target.value)} required />
         {error && <span className="text-red-500 text-sm text-center">{error}</span>}
-        <button type="submit" className="py-3 rounded-xl font-bold text-white bg-gradient-to-r from-blue-500 to-fuchsia-500 hover:scale-105 transition">Giriş Yap</button>
+        <button type="submit" className="w-full mt-2">Giriş Yap</button>
+        <p className="mt-8 text-xs text-muted text-center">
+          © {new Date().getFullYear()} Alf Kurs Merkezi
+        </p>
       </form>
     </div>
   );

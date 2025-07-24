@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { db } from '../firebase';
 import { collection, getDocs } from 'firebase/firestore';
-import { CheckCircleIcon, XCircleIcon, UserIcon } from '@heroicons/react/24/solid';
 
 const KATEGORILER = ['Sabah', 'Öğlen', 'Akşam'];
 
@@ -39,18 +38,15 @@ export default function AdminPanel() {
   const katilmayanlar = students.filter(s => !isPresent(s.id));
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-700 via-fuchsia-500 to-orange-400 px-2 py-8">
-      <div className="glass-card gradient-border p-10 max-w-4xl w-full flex flex-col items-center animate-fade-in">
-        <h1 className="agency-title text-4xl mb-8 text-center tracking-tight bg-gradient-to-r from-blue-700 via-fuchsia-600 to-orange-500 bg-clip-text text-transparent">
-          Yönetici Paneli
-        </h1>
-        <div className="flex gap-6 mb-10 flex-wrap justify-center">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-[var(--bg)] px-2 py-8">
+      <div className="card w-full max-w-4xl flex flex-col items-center">
+        <h1 className="text-2xl font-bold text-center mb-6">Yönetici Paneli - Alf Kurs Merkezi</h1>
+        <div className="flex gap-4 mb-8 flex-wrap justify-center">
           {KATEGORILER.map(k => (
             <button
               key={k}
               onClick={() => setSelectedKategori(k)}
-              className={`px-8 py-4 rounded-2xl font-extrabold text-xl transition-all shadow-lg border-2 duration-200 tracking-wide ${selectedKategori === k ? 'bg-gradient-to-r from-blue-500 to-fuchsia-500 text-white border-fuchsia-500 scale-105' : 'bg-white/20 text-white border-white/30 hover:scale-105'}`}
-              style={{minWidth: 140}}
+              className={`px-6 py-2 rounded-md font-bold text-base transition-all w-32 ${selectedKategori === k ? 'bg-[var(--accent)] text-white' : 'bg-[var(--bg)] text-[var(--primary)] border border-[var(--border)]'}`}
             >
               {k}
             </button>
@@ -59,43 +55,40 @@ export default function AdminPanel() {
         {loading ? (
           <div className="text-center text-lg">Yükleniyor...</div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 w-full">
-            <div className="bg-white/10 rounded-2xl p-8 flex flex-col items-center shadow-xl min-h-[300px]">
-              <div className="mb-6 text-xl font-bold text-green-200">Katılanlar ({katilanlar.length})</div>
-              <div className="flex flex-col gap-3 w-full max-h-72 overflow-y-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
+            <div className="bg-[var(--bg)] rounded-lg p-5 flex flex-col items-center min-h-[180px] border border-[var(--border)]">
+              <div className="mb-3 text-lg font-bold text-[var(--primary)]">Katılanlar ({katilanlar.length})</div>
+              <div className="flex flex-col gap-2 w-full max-h-48 overflow-y-auto">
                 {katilanlar.length === 0 ? (
-                  <div className="flex flex-col items-center text-gray-300 text-center mt-8">
+                  <div className="flex flex-col items-center text-muted text-center mt-4">
                     <span>Hiç yok</span>
                   </div>
                 ) : katilanlar.map(s => (
-                  <div key={s.id} className="flex items-center gap-3 bg-white/10 rounded-lg px-4 py-3">
-                    <div className="w-10 h-10 rounded-full bg-green-400/80 flex items-center justify-center font-bold text-white text-xl uppercase">
-                      {s.ad[0] || <UserIcon className="w-6 h-6" />}
-                    </div>
-                    <span className="text-white/90 font-semibold truncate text-lg">{s.ad} {s.soyad}</span>
+                  <div key={s.id} className="flex items-center gap-2 px-2 py-1">
+                    <span className="font-semibold text-[var(--primary)]">{s.ad} {s.soyad}</span>
                   </div>
                 ))}
               </div>
             </div>
-            <div className="bg-white/10 rounded-2xl p-8 flex flex-col items-center shadow-xl min-h-[300px]">
-              <div className="mb-6 text-xl font-bold text-red-200">Katılmayanlar ({katilmayanlar.length})</div>
-              <div className="flex flex-col gap-3 w-full max-h-72 overflow-y-auto">
+            <div className="bg-[var(--bg)] rounded-lg p-5 flex flex-col items-center min-h-[180px] border border-[var(--border)]">
+              <div className="mb-3 text-lg font-bold text-[var(--accent)]">Katılmayanlar ({katilmayanlar.length})</div>
+              <div className="flex flex-col gap-2 w-full max-h-48 overflow-y-auto">
                 {katilmayanlar.length === 0 ? (
-                  <div className="flex flex-col items-center text-gray-300 text-center mt-8">
+                  <div className="flex flex-col items-center text-muted text-center mt-4">
                     <span>Hiç yok</span>
                   </div>
                 ) : katilmayanlar.map(s => (
-                  <div key={s.id} className="flex items-center gap-3 bg-white/10 rounded-lg px-4 py-3">
-                    <div className="w-10 h-10 rounded-full bg-red-400/80 flex items-center justify-center font-bold text-white text-xl uppercase">
-                      {s.ad[0] || <UserIcon className="w-6 h-6" />}
-                    </div>
-                    <span className="text-white/90 font-semibold truncate text-lg">{s.ad} {s.soyad}</span>
+                  <div key={s.id} className="flex items-center gap-2 px-2 py-1">
+                    <span className="font-semibold text-[var(--primary)]">{s.ad} {s.soyad}</span>
                   </div>
                 ))}
               </div>
             </div>
           </div>
         )}
+        <p className="mt-8 text-xs text-muted text-center">
+          © {new Date().getFullYear()} Alf Kurs Merkezi
+        </p>
       </div>
     </div>
   );
