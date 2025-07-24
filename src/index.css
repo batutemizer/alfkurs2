@@ -3,14 +3,15 @@
 @tailwind utilities;
 
 :root {
-  --primary: #1e3a8a;
-  --primary-dark: #16204d;
-  --accent: #2563eb;
-  --bg: #f4f6fa;
+  --primary: #2563eb;
+  --primary-dark: #1e3a8a;
+  --accent: linear-gradient(90deg, #2563eb 0%, #38bdf8 100%);
+  --bg: linear-gradient(135deg, #f4f6fa 0%, #e0e7ff 100%);
   --card: #fff;
   --border: #e5e7eb;
   --text-main: #1e293b;
   --text-muted: #64748b;
+  --shadow: 0 4px 32px 0 rgba(30,41,59,0.10);
 }
 
 body {
@@ -22,35 +23,39 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Montserrat', Arial, sans-serif;
-  font-weight: 800;
+  font-weight: 900;
   color: var(--primary);
   letter-spacing: -1px;
 }
 
 .card {
   background: var(--card);
-  border-radius: 1.1rem;
-  box-shadow: 0 2px 16px 0 rgba(30,41,59,0.06);
+  border-radius: 1.3rem;
+  box-shadow: var(--shadow);
   border: 1.5px solid var(--border);
-  padding: 2.2rem 2rem;
-  transition: box-shadow 0.2s;
+  padding: 2.5rem 2.2rem;
+  transition: box-shadow 0.2s, transform 0.2s;
+  position: relative;
+  overflow: hidden;
 }
 .card:hover {
-  box-shadow: 0 4px 32px 0 rgba(30,41,59,0.10);
+  box-shadow: 0 8px 40px 0 rgba(37,99,235,0.13);
+  transform: translateY(-2px) scale(1.01);
 }
 
 input {
   background: #f8fafc;
   color: var(--text-main);
   border: 1.5px solid var(--border);
-  border-radius: 0.7rem;
-  padding: 0.85rem 1.1rem;
-  font-size: 1.08rem;
+  border-radius: 0.9rem;
+  padding: 1rem 1.2rem;
+  font-size: 1.12rem;
   transition: border-color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px 0 #2563eb11;
 }
 input:focus {
-  border-color: var(--accent);
-  box-shadow: 0 2px 12px 0 #2563eb22;
+  border-color: #38bdf8;
+  box-shadow: 0 2px 16px 0 #38bdf822;
   outline: none;
 }
 input::placeholder {
@@ -59,23 +64,25 @@ input::placeholder {
 }
 
 button {
-  background: var(--primary);
+  background: linear-gradient(90deg, #2563eb 0%, #38bdf8 100%);
   color: #fff;
   border: none;
-  border-radius: 0.7rem;
-  font-weight: 700;
-  font-size: 1.08rem;
-  padding: 0.85rem 1.5rem;
+  border-radius: 0.9rem;
+  font-weight: 800;
+  font-size: 1.12rem;
+  padding: 1rem 1.7rem;
   transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
-  box-shadow: 0 2px 8px 0 rgba(30,41,59,0.08);
+  box-shadow: 0 2px 12px 0 rgba(37,99,235,0.10);
   cursor: pointer;
+  letter-spacing: 0.5px;
 }
 button:hover {
-  background: var(--accent);
-  transform: translateY(-2px) scale(1.03);
+  background: linear-gradient(90deg, #38bdf8 0%, #2563eb 100%);
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 4px 24px 0 #2563eb22;
 }
 button:active {
-  background: var(--primary-dark);
+  background: #1e3a8a;
   transform: scale(0.98);
 }
 
@@ -83,11 +90,41 @@ button:active {
   color: var(--text-muted);
 }
 
+/* Sayfa geçiş animasyonu */
+.page-enter {
+  opacity: 0;
+  transform: translateY(30px) scale(0.98);
+  z-index: 0;
+}
+.page-enter-active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  transition: opacity 400ms cubic-bezier(0.4,0,0.2,1), transform 400ms cubic-bezier(0.4,0,0.2,1);
+}
+.page-exit {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+.page-exit-active {
+  opacity: 0;
+  transform: translateY(-30px) scale(0.98);
+  transition: opacity 400ms cubic-bezier(0.4,0,0.2,1), transform 400ms cubic-bezier(0.4,0,0.2,1);
+}
+
 @media (max-width: 600px) {
   .card {
-    padding: 1.1rem 0.6rem;
+    padding: 1.2rem 0.7rem;
   }
   h1 {
     font-size: 2rem;
   }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  background: #e0e7ff;
+}
+::-webkit-scrollbar-thumb {
+  background: #b6c6f5;
+  border-radius: 8px;
 }
